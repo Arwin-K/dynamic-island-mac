@@ -1,0 +1,32 @@
+name: Build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: Build
+        run: |
+          xcodebuild -project DynamicIsland4Mac.xcodeproj \
+            -scheme DynamicIsland4Mac \
+            -configuration Debug \
+            -destination 'platform=macOS' \
+            build
+
+      - name: Test
+        run: |
+          xcodebuild -project DynamicIsland4Mac.xcodeproj \
+            -scheme DynamicIsland4Mac \
+            -configuration Debug \
+            -destination 'platform=macOS' \
+            test
