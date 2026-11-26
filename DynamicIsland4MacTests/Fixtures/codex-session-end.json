@@ -1,0 +1,7 @@
+{
+  "session_id": "x-789",
+  "transcript_path": null,
+  "cwd": "/Users/dev/code/api-server",
+  "hook_event_name": "SessionEnd",
+  "reason": "other"
+}

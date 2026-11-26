@@ -1,0 +1,12 @@
+{
+  "session_id": "c-123",
+  "transcript_path": "/Users/dev/.claude/projects/app/c-123.jsonl",
+  "cwd": "/Users/dev/code/notch-app",
+  "permission_mode": "default",
+  "hook_event_name": "PermissionRequest",
+  "tool_name": "Bash",
+  "tool_input": {
+    "command": "rm -rf build"
+  },
+  "permission_suggestions": []
+}

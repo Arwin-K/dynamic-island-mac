@@ -1,0 +1,14 @@
+{
+  "session_id": "c-123",
+  "transcript_path": "/Users/dev/.claude/projects/app/c-123.jsonl",
+  "cwd": "/Users/dev/code/notch-app",
+  "permission_mode": "default",
+  "hook_event_name": "PreToolUse",
+  "tool_name": "Edit",
+  "tool_use_id": "t2",
+  "tool_input": {
+    "file_path": "/Users/dev/code/notch-app/src/App.swift",
+    "old_string": "a",
+    "new_string": "b"
+  }
+}

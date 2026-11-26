@@ -1,0 +1,11 @@
+{
+  "session_id": "x-789",
+  "transcript_path": null,
+  "cwd": "/Users/dev/code/api-server",
+  "model": "gpt-5.5-codex",
+  "hook_event_name": "PostModelRequest",
+  "turn_id": "turn-1",
+  "status": "failed",
+  "error": "stream disconnected",
+  "token_usage": null
+}

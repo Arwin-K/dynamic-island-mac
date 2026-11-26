@@ -1,0 +1,10 @@
+{
+  "session_id": "c-123",
+  "transcript_path": "/Users/dev/.claude/projects/app/c-123.jsonl",
+  "cwd": "/Users/dev/code/notch-app",
+  "permission_mode": "default",
+  "hook_event_name": "SubagentStop",
+  "agent_id": "a1",
+  "agent_type": "Explore",
+  "stop_hook_active": false
+}
