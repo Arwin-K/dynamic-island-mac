@@ -1,0 +1,147 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D14A0000000000000000001D /* MediaRemoteAdapter.framework in Embed Adapter Framework */ = {isa = PBXBuildFile; fileRef = D14A00000000000000000002; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D14A0000000000000000001E /* MediaRemoteAdapterTestClient in Embed Adapter Test Client */ = {isa = PBXBuildFile; fileRef = D14A00000000000000000003; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		D14A0000000000000000001F /* Themes in Resources */ = {isa = PBXBuildFile; fileRef = D14A00000000000000000006; };
+		D14A00000000000000000020 /* agent-hook.sh in Resources */ = {isa = PBXBuildFile; fileRef = D14A00000000000000000007; };
+		D14A00000000000000000021 /* mediaremote-adapter.pl in Resources */ = {isa = PBXBuildFile; fileRef = D14A00000000000000000008; };
+		D14A00000000000000000022 /* commands.m in Sources */ = {isa = PBXBuildFile; fileRef = D14A00000000000000000009; };
+		D14A00000000000000000023 /* env.m in Sources */ = {isa = PBXBuildFile; fileRef = D14A0000000000000000000A; };
+		D14A00000000000000000024 /* get.m in Sources */ = {isa = PBXBuildFile; fileRef = D14A0000000000000000000B; };
+		D14A00000000000000000025 /* globals.m in Sources */ = {isa = PBXBuildFile; fileRef = D14A0000000000000000000C; };
+		D14A00000000000000000026 /* keys.m in Sources */ = {isa = PBXBuildFile; fileRef = D14A0000000000000000000D; };
+		D14A00000000000000000027 /* now_playing.m in Sources */ = {isa = PBXBuildFile; fileRef = D14A0000000000000000000E; };
+		D14A00000000000000000028 /* repeat.m in Sources */ = {isa = PBXBuildFile; fileRef = D14A0000000000000000000F; };
+		D14A00000000000000000029 /* seek.m in Sources */ = {isa = PBXBuildFile; fileRef = D14A00000000000000000010; };
+		D14A0000000000000000002A /* send.m in Sources */ = {isa = PBXBuildFile; fileRef = D14A00000000000000000011; };
+		D14A0000000000000000002B /* shuffle.m in Sources */ = {isa = PBXBuildFile; fileRef = D14A00000000000000000012; };
+		D14A0000000000000000002C /* speed.m in Sources */ = {isa = PBXBuildFile; fileRef = D14A00000000000000000013; };
+		D14A0000000000000000002D /* stream.m in Sources */ = {isa = PBXBuildFile; fileRef = D14A00000000000000000014; };
+		D14A0000000000000000002E /* test.m in Sources */ = {isa = PBXBuildFile; fileRef = D14A00000000000000000015; };
+		D14A0000000000000000002F /* MediaRemote.m in Sources */ = {isa = PBXBuildFile; fileRef = D14A00000000000000000016; };
+		D14A00000000000000000030 /* Debounce.m in Sources */ = {isa = PBXBuildFile; fileRef = D14A00000000000000000017; };
+		D14A00000000000000000031 /* helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = D14A00000000000000000018; };
+		D14A00000000000000000032 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D14A00000000000000000019; };
+		D14A00000000000000000033 /* NowPlayingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D14A0000000000000000001A; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D14A00000000000000000059 /* PBXContainerItemProxy */ = {isa = PBXContainerItemProxy; containerPortal = D14A00000000000000000049 /* Project object */; proxyType = 1; remoteGlobalIDString = D14A00000000000000000046; remoteInfo = "MediaRemoteAdapter"; };
+		D14A0000000000000000005B /* PBXContainerItemProxy */ = {isa = PBXContainerItemProxy; containerPortal = D14A00000000000000000049 /* Project object */; proxyType = 1; remoteGlobalIDString = D14A00000000000000000047; remoteInfo = "MediaRemoteAdapterTestClient"; };
+		D14A0000000000000000005D /* PBXContainerItemProxy */ = {isa = PBXContainerItemProxy; containerPortal = D14A00000000000000000049 /* Project object */; proxyType = 1; remoteGlobalIDString = D14A00000000000000000045; remoteInfo = "DynamicIsland4Mac"; };
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D14A0000000000000000003C /* Embed Adapter Framework */ = {isa = PBXCopyFilesBuildPhase; buildActionMask = 2147483647; dstPath = ""; dstSubfolderSpec = 10; name = "Embed Adapter Framework"; files = (D14A0000000000000000001D /* MediaRemoteAdapter.framework */, ); runOnlyForDeploymentPostprocessing = 0; };
+		D14A0000000000000000003D /* Embed Adapter Test Client */ = {isa = PBXCopyFilesBuildPhase; buildActionMask = 2147483647; dstPath = ""; dstSubfolderSpec = 6; name = "Embed Adapter Test Client"; files = (D14A0000000000000000001E /* MediaRemoteAdapterTestClient */, ); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		D14A00000000000000000001 /* DynamicIsland4Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DynamicIsland4Mac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D14A00000000000000000002 /* MediaRemoteAdapter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MediaRemoteAdapter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D14A00000000000000000003 /* MediaRemoteAdapterTestClient */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MediaRemoteAdapterTestClient; sourceTree = BUILT_PRODUCTS_DIR; };
+		D14A00000000000000000004 /* DynamicIsland4MacTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DynamicIsland4MacTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D14A00000000000000000005 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D14A00000000000000000006 /* Themes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Themes; sourceTree = "<group>"; };
+		D14A00000000000000000007 /* agent-hook.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "agent-hook.sh"; sourceTree = "<group>"; };
+		D14A00000000000000000008 /* mediaremote-adapter.pl */ = {isa = PBXFileReference; lastKnownFileType = text.script.perl; path = "bin/mediaremote-adapter.pl"; sourceTree = "<group>"; };
+		D14A00000000000000000009 /* commands.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "src/adapter/commands.m"; sourceTree = "<group>"; };
+		D14A0000000000000000000A /* env.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "src/adapter/env.m"; sourceTree = "<group>"; };
+		D14A0000000000000000000B /* get.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "src/adapter/get.m"; sourceTree = "<group>"; };
+		D14A0000000000000000000C /* globals.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "src/adapter/globals.m"; sourceTree = "<group>"; };
+		D14A0000000000000000000D /* keys.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "src/adapter/keys.m"; sourceTree = "<group>"; };
+		D14A0000000000000000000E /* now_playing.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "src/adapter/now_playing.m"; sourceTree = "<group>"; };
+		D14A0000000000000000000F /* repeat.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "src/adapter/repeat.m"; sourceTree = "<group>"; };
+		D14A00000000000000000010 /* seek.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "src/adapter/seek.m"; sourceTree = "<group>"; };
+		D14A00000000000000000011 /* send.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "src/adapter/send.m"; sourceTree = "<group>"; };
+		D14A00000000000000000012 /* shuffle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "src/adapter/shuffle.m"; sourceTree = "<group>"; };
+		D14A00000000000000000013 /* speed.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "src/adapter/speed.m"; sourceTree = "<group>"; };
+		D14A00000000000000000014 /* stream.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "src/adapter/stream.m"; sourceTree = "<group>"; };
+		D14A00000000000000000015 /* test.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "src/adapter/test.m"; sourceTree = "<group>"; };
+		D14A00000000000000000016 /* MediaRemote.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "src/private/MediaRemote.m"; sourceTree = "<group>"; };
+		D14A00000000000000000017 /* Debounce.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "src/utility/Debounce.m"; sourceTree = "<group>"; };
+		D14A00000000000000000018 /* helpers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "src/utility/helpers.m"; sourceTree = "<group>"; };
+		D14A00000000000000000019 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "src/test/main.m"; sourceTree = "<group>"; };
+		D14A0000000000000000001A /* NowPlayingTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "src/test/NowPlayingTest.m"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		D14A0000000000000000001B /* DynamicIsland4Mac */ = {isa = PBXFileSystemSynchronizedRootGroup; path = DynamicIsland4Mac; sourceTree = "<group>"; };
+		D14A0000000000000000001C /* DynamicIsland4MacTests */ = {isa = PBXFileSystemSynchronizedRootGroup; path = DynamicIsland4MacTests; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D14A0000000000000000003A /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		D14A0000000000000000003F /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		D14A00000000000000000041 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		D14A00000000000000000043 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D14A00000000000000000034 = {isa = PBXGroup; children = (D14A0000000000000000001B /* DynamicIsland4Mac */, D14A0000000000000000001C /* DynamicIsland4MacTests */, D14A00000000000000000036 /* Config */, D14A00000000000000000038 /* scripts */, D14A00000000000000000006 /* Themes */, D14A00000000000000000037 /* mediaremote-adapter */, D14A00000000000000000035 /* Products */, ); sourceTree = "<group>"; };
+		D14A00000000000000000035 /* Products */ = {isa = PBXGroup; children = (D14A00000000000000000001, D14A00000000000000000002, D14A00000000000000000003, D14A00000000000000000004, ); name = Products; sourceTree = "<group>"; };
+		D14A00000000000000000036 /* Config */ = {isa = PBXGroup; children = (D14A00000000000000000005, ); path = Config; sourceTree = "<group>"; };
+		D14A00000000000000000038 /* scripts */ = {isa = PBXGroup; children = (D14A00000000000000000007, ); path = scripts; sourceTree = "<group>"; };
+		D14A00000000000000000037 /* mediaremote-adapter */ = {isa = PBXGroup; children = (D14A00000000000000000008, D14A00000000000000000009, D14A0000000000000000000A, D14A0000000000000000000B, D14A0000000000000000000C, D14A0000000000000000000D, D14A0000000000000000000E, D14A0000000000000000000F, D14A00000000000000000010, D14A00000000000000000011, D14A00000000000000000012, D14A00000000000000000013, D14A00000000000000000014, D14A00000000000000000015, D14A00000000000000000016, D14A00000000000000000017, D14A00000000000000000018, D14A00000000000000000019, D14A0000000000000000001A, ); name = "mediaremote-adapter"; path = "Vendor/mediaremote-adapter"; sourceTree = "<group>"; };
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D14A00000000000000000045 /* DynamicIsland4Mac */ = {isa = PBXNativeTarget; buildConfigurationList = D14A0000000000000000004D; buildPhases = (D14A00000000000000000039, D14A0000000000000000003A, D14A0000000000000000003B, D14A0000000000000000003C, D14A0000000000000000003D, ); buildRules = (); dependencies = (D14A0000000000000000005A, D14A0000000000000000005C, ); fileSystemSynchronizedGroups = (D14A0000000000000000001B, ); name = DynamicIsland4Mac; productName = DynamicIsland4Mac; productReference = D14A00000000000000000001; productType = "com.apple.product-type.application"; };
+		D14A00000000000000000046 /* MediaRemoteAdapter */ = {isa = PBXNativeTarget; buildConfigurationList = D14A00000000000000000050; buildPhases = (D14A0000000000000000003E, D14A0000000000000000003F, ); buildRules = (); dependencies = (); name = MediaRemoteAdapter; productName = MediaRemoteAdapter; productReference = D14A00000000000000000002; productType = "com.apple.product-type.framework"; };
+		D14A00000000000000000047 /* MediaRemoteAdapterTestClient */ = {isa = PBXNativeTarget; buildConfigurationList = D14A00000000000000000053; buildPhases = (D14A00000000000000000040, D14A00000000000000000041, ); buildRules = (); dependencies = (); name = MediaRemoteAdapterTestClient; productName = MediaRemoteAdapterTestClient; productReference = D14A00000000000000000003; productType = "com.apple.product-type.tool"; };
+		D14A00000000000000000048 /* DynamicIsland4MacTests */ = {isa = PBXNativeTarget; buildConfigurationList = D14A00000000000000000056; buildPhases = (D14A00000000000000000042, D14A00000000000000000043, D14A00000000000000000044, ); buildRules = (); dependencies = (D14A0000000000000000005E, ); fileSystemSynchronizedGroups = (D14A0000000000000000001C, ); name = DynamicIsland4MacTests; productName = DynamicIsland4MacTests; productReference = D14A00000000000000000004; productType = "com.apple.product-type.bundle.unit-test"; };
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D14A00000000000000000049 /* Project object */ = {isa = PBXProject; attributes = {BuildIndependentTargetsInParallel = 1; LastSwiftUpdateCheck = 2700; LastUpgradeCheck = 2700; TargetAttributes = {D14A00000000000000000048 = {TestTargetID = D14A00000000000000000045; }; }; }; buildConfigurationList = D14A0000000000000000004A; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = (en, Base, ); mainGroup = D14A00000000000000000034; minimizedProjectReferenceProxies = 1; preferredProjectObjectVersion = 77; productRefGroup = D14A00000000000000000035 /* Products */; projectDirPath = ""; projectRoot = ""; targets = (D14A00000000000000000045, D14A00000000000000000046, D14A00000000000000000047, D14A00000000000000000048, ); };
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D14A0000000000000000003B /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (D14A0000000000000000001F /* Themes in Resources */, D14A00000000000000000020 /* agent-hook.sh in Resources */, D14A00000000000000000021 /* mediaremote-adapter.pl in Resources */, ); runOnlyForDeploymentPostprocessing = 0; };
+		D14A00000000000000000044 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D14A00000000000000000039 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		D14A0000000000000000003E /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (D14A00000000000000000022 /* commands.m */, D14A00000000000000000023 /* env.m */, D14A00000000000000000024 /* get.m */, D14A00000000000000000025 /* globals.m */, D14A00000000000000000026 /* keys.m */, D14A00000000000000000027 /* now_playing.m */, D14A00000000000000000028 /* repeat.m */, D14A00000000000000000029 /* seek.m */, D14A0000000000000000002A /* send.m */, D14A0000000000000000002B /* shuffle.m */, D14A0000000000000000002C /* speed.m */, D14A0000000000000000002D /* stream.m */, D14A0000000000000000002E /* test.m */, D14A0000000000000000002F /* MediaRemote.m */, D14A00000000000000000030 /* Debounce.m */, D14A00000000000000000031 /* helpers.m */, ); runOnlyForDeploymentPostprocessing = 0; };
+		D14A00000000000000000040 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (D14A00000000000000000032 /* main.m */, D14A00000000000000000033 /* NowPlayingTest.m */, ); runOnlyForDeploymentPostprocessing = 0; };
+		D14A00000000000000000042 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D14A0000000000000000005A /* PBXTargetDependency */ = {isa = PBXTargetDependency; target = D14A00000000000000000046 /* MediaRemoteAdapter */; targetProxy = D14A00000000000000000059 /* PBXContainerItemProxy */; };
+		D14A0000000000000000005C /* PBXTargetDependency */ = {isa = PBXTargetDependency; target = D14A00000000000000000047 /* MediaRemoteAdapterTestClient */; targetProxy = D14A0000000000000000005B /* PBXContainerItemProxy */; };
+		D14A0000000000000000005E /* PBXTargetDependency */ = {isa = PBXTargetDependency; target = D14A00000000000000000045 /* DynamicIsland4Mac */; targetProxy = D14A0000000000000000005D /* PBXContainerItemProxy */; };
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		D14A0000000000000000004B /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {ALWAYS_SEARCH_USER_PATHS = NO; CLANG_ANALYZER_NONNULL = YES; CLANG_ENABLE_MODULES = YES; CLANG_ENABLE_OBJC_ARC = YES; CLANG_ENABLE_OBJC_WEAK = YES; COPY_PHASE_STRIP = NO; ENABLE_STRICT_OBJC_MSGSEND = YES; ENABLE_USER_SCRIPT_SANDBOXING = YES; GCC_C_LANGUAGE_STANDARD = gnu17; MACOSX_DEPLOYMENT_TARGET = 14.0; SDKROOT = macosx; MTL_FAST_MATH = YES; CODE_SIGN_IDENTITY = "-"; CODE_SIGN_STYLE = Manual; DEVELOPMENT_TEAM = ""; SWIFT_VERSION = 5.0; SWIFT_STRICT_CONCURRENCY = minimal; LOCALIZATION_PREFERS_STRING_CATALOGS = YES; DEBUG_INFORMATION_FORMAT = dwarf; ENABLE_TESTABILITY = YES; GCC_OPTIMIZATION_LEVEL = 0; ONLY_ACTIVE_ARCH = YES; SWIFT_OPTIMIZATION_LEVEL = "-Onone"; SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)"; GCC_PREPROCESSOR_DEFINITIONS = ("DEBUG=1", "$(inherited)", ); }; name = Debug; };
+		D14A0000000000000000004C /* Release */ = {isa = XCBuildConfiguration; buildSettings = {ALWAYS_SEARCH_USER_PATHS = NO; CLANG_ANALYZER_NONNULL = YES; CLANG_ENABLE_MODULES = YES; CLANG_ENABLE_OBJC_ARC = YES; CLANG_ENABLE_OBJC_WEAK = YES; COPY_PHASE_STRIP = NO; ENABLE_STRICT_OBJC_MSGSEND = YES; ENABLE_USER_SCRIPT_SANDBOXING = YES; GCC_C_LANGUAGE_STANDARD = gnu17; MACOSX_DEPLOYMENT_TARGET = 14.0; SDKROOT = macosx; MTL_FAST_MATH = YES; CODE_SIGN_IDENTITY = "-"; CODE_SIGN_STYLE = Manual; DEVELOPMENT_TEAM = ""; SWIFT_VERSION = 5.0; SWIFT_STRICT_CONCURRENCY = minimal; LOCALIZATION_PREFERS_STRING_CATALOGS = YES; DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym"; ENABLE_NS_ASSERTIONS = NO; SWIFT_COMPILATION_MODE = wholemodule; }; name = Release; };
+		D14A0000000000000000004E /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {COMBINE_HIDPI_IMAGES = YES; CURRENT_PROJECT_VERSION = 1; MARKETING_VERSION = 0.1.0; GENERATE_INFOPLIST_FILE = YES; INFOPLIST_FILE = Config/Info.plist; INFOPLIST_KEY_LSUIElement = YES; INFOPLIST_KEY_NSHumanReadableCopyright = "MIT License"; INFOPLIST_KEY_CFBundleDisplayName = DynamicIsland4Mac; INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities"; LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/../Frameworks", ); PRODUCT_BUNDLE_IDENTIFIER = com.dynamicisland4mac.DynamicIsland4Mac; PRODUCT_NAME = "$(TARGET_NAME)"; ENABLE_HARDENED_RUNTIME = NO; ENABLE_APP_SANDBOX = NO; SWIFT_EMIT_LOC_STRINGS = YES; ENABLE_PREVIEWS = YES; }; name = Debug; };
+		D14A0000000000000000004F /* Release */ = {isa = XCBuildConfiguration; buildSettings = {COMBINE_HIDPI_IMAGES = YES; CURRENT_PROJECT_VERSION = 1; MARKETING_VERSION = 0.1.0; GENERATE_INFOPLIST_FILE = YES; INFOPLIST_FILE = Config/Info.plist; INFOPLIST_KEY_LSUIElement = YES; INFOPLIST_KEY_NSHumanReadableCopyright = "MIT License"; INFOPLIST_KEY_CFBundleDisplayName = DynamicIsland4Mac; INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities"; LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/../Frameworks", ); PRODUCT_BUNDLE_IDENTIFIER = com.dynamicisland4mac.DynamicIsland4Mac; PRODUCT_NAME = "$(TARGET_NAME)"; ENABLE_HARDENED_RUNTIME = NO; ENABLE_APP_SANDBOX = NO; SWIFT_EMIT_LOC_STRINGS = YES; ENABLE_PREVIEWS = YES; }; name = Release; };
+		D14A00000000000000000051 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {PRODUCT_NAME = MediaRemoteAdapter; PRODUCT_BUNDLE_IDENTIFIER = com.dynamicisland4mac.MediaRemoteAdapter; GENERATE_INFOPLIST_FILE = YES; DEFINES_MODULE = NO; SKIP_INSTALL = YES; DYLIB_INSTALL_NAME_BASE = "@rpath"; CURRENT_PROJECT_VERSION = 1; MARKETING_VERSION = 0.1; DYLIB_COMPATIBILITY_VERSION = 1; DYLIB_CURRENT_VERSION = 1; HEADER_SEARCH_PATHS = ("$(SRCROOT)/Vendor/mediaremote-adapter/include", "$(SRCROOT)/Vendor/mediaremote-adapter/src", ); GCC_SYMBOLS_PRIVATE_EXTERN = NO; OTHER_CFLAGS = ("-fvisibility=default", ); OTHER_LDFLAGS = ("-framework", Foundation, "-framework", AppKit, "-framework", UniformTypeIdentifiers, ); GCC_WARN_INHIBIT_ALL_WARNINGS = YES; VERSIONING_SYSTEM = "apple-generic"; }; name = Debug; };
+		D14A00000000000000000052 /* Release */ = {isa = XCBuildConfiguration; buildSettings = {PRODUCT_NAME = MediaRemoteAdapter; PRODUCT_BUNDLE_IDENTIFIER = com.dynamicisland4mac.MediaRemoteAdapter; GENERATE_INFOPLIST_FILE = YES; DEFINES_MODULE = NO; SKIP_INSTALL = YES; DYLIB_INSTALL_NAME_BASE = "@rpath"; CURRENT_PROJECT_VERSION = 1; MARKETING_VERSION = 0.1; DYLIB_COMPATIBILITY_VERSION = 1; DYLIB_CURRENT_VERSION = 1; HEADER_SEARCH_PATHS = ("$(SRCROOT)/Vendor/mediaremote-adapter/include", "$(SRCROOT)/Vendor/mediaremote-adapter/src", ); GCC_SYMBOLS_PRIVATE_EXTERN = NO; OTHER_CFLAGS = ("-fvisibility=default", ); OTHER_LDFLAGS = ("-framework", Foundation, "-framework", AppKit, "-framework", UniformTypeIdentifiers, ); GCC_WARN_INHIBIT_ALL_WARNINGS = YES; VERSIONING_SYSTEM = "apple-generic"; }; name = Release; };
+		D14A00000000000000000054 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {PRODUCT_NAME = "$(TARGET_NAME)"; SKIP_INSTALL = YES; HEADER_SEARCH_PATHS = ("$(SRCROOT)/Vendor/mediaremote-adapter/src/test", ); OTHER_LDFLAGS = ("-framework", Foundation, "-framework", MediaPlayer, ); GCC_WARN_INHIBIT_ALL_WARNINGS = YES; }; name = Debug; };
+		D14A00000000000000000055 /* Release */ = {isa = XCBuildConfiguration; buildSettings = {PRODUCT_NAME = "$(TARGET_NAME)"; SKIP_INSTALL = YES; HEADER_SEARCH_PATHS = ("$(SRCROOT)/Vendor/mediaremote-adapter/src/test", ); OTHER_LDFLAGS = ("-framework", Foundation, "-framework", MediaPlayer, ); GCC_WARN_INHIBIT_ALL_WARNINGS = YES; }; name = Release; };
+		D14A00000000000000000057 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {BUNDLE_LOADER = "$(TEST_HOST)"; TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DynamicIsland4Mac.app/Contents/MacOS/DynamicIsland4Mac"; GENERATE_INFOPLIST_FILE = YES; PRODUCT_BUNDLE_IDENTIFIER = com.dynamicisland4mac.DynamicIsland4MacTests; PRODUCT_NAME = "$(TARGET_NAME)"; CURRENT_PROJECT_VERSION = 1; MARKETING_VERSION = 0.1.0; SWIFT_EMIT_LOC_STRINGS = NO; }; name = Debug; };
+		D14A00000000000000000058 /* Release */ = {isa = XCBuildConfiguration; buildSettings = {BUNDLE_LOADER = "$(TEST_HOST)"; TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DynamicIsland4Mac.app/Contents/MacOS/DynamicIsland4Mac"; GENERATE_INFOPLIST_FILE = YES; PRODUCT_BUNDLE_IDENTIFIER = com.dynamicisland4mac.DynamicIsland4MacTests; PRODUCT_NAME = "$(TARGET_NAME)"; CURRENT_PROJECT_VERSION = 1; MARKETING_VERSION = 0.1.0; SWIFT_EMIT_LOC_STRINGS = NO; }; name = Release; };
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D14A0000000000000000004A /* Build configuration list for PBXProject "DynamicIsland4Mac" */ = {isa = XCConfigurationList; buildConfigurations = (D14A0000000000000000004B /* Debug */, D14A0000000000000000004C /* Release */, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		D14A0000000000000000004D /* Build configuration list for PBXNativeTarget "DynamicIsland4Mac" */ = {isa = XCConfigurationList; buildConfigurations = (D14A0000000000000000004E /* Debug */, D14A0000000000000000004F /* Release */, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		D14A00000000000000000050 /* Build configuration list for PBXNativeTarget "MediaRemoteAdapter" */ = {isa = XCConfigurationList; buildConfigurations = (D14A00000000000000000051 /* Debug */, D14A00000000000000000052 /* Release */, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		D14A00000000000000000053 /* Build configuration list for PBXNativeTarget "MediaRemoteAdapterTestClient" */ = {isa = XCConfigurationList; buildConfigurations = (D14A00000000000000000054 /* Debug */, D14A00000000000000000055 /* Release */, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		D14A00000000000000000056 /* Build configuration list for PBXNativeTarget "DynamicIsland4MacTests" */ = {isa = XCConfigurationList; buildConfigurations = (D14A00000000000000000057 /* Debug */, D14A00000000000000000058 /* Release */, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+/* End XCConfigurationList section */
+
+	};
+	rootObject = D14A00000000000000000049 /* Project object */;
+}
