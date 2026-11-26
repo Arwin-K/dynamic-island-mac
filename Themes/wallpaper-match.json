@@ -1,0 +1,19 @@
+{
+  "id": "wallpaper-match",
+  "name": "Wallpaper Match",
+  "author": "DynamicIsland4Mac",
+  "surface": {
+    "kind": "material",
+    "material": "regular",
+    "border": { "width": 1, "opacity": 0.6 },
+    "shadow": { "outerRadius": 12, "outerOpacity": 0.3 }
+  },
+  "colors": {
+    "accentSource": "wallpaper",
+    "sampleStyle": "vibrant",
+    "dark": { "surface": "#101014", "border": "#FFFFFF26" },
+    "light": { "surface": "#FAFAFA", "border": "#0000001F" }
+  },
+  "appearance": "system",
+  "motion": { "preset": "smooth" }
+}

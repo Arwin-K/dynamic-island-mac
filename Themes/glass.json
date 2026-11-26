@@ -1,0 +1,21 @@
+{
+  "id": "glass",
+  "name": "Glass",
+  "author": "DynamicIsland4Mac",
+  "surface": {
+    "kind": "material",
+    "material": "thin",
+    "opacity": 1,
+    "border": { "width": 0.5, "opacity": 1 },
+    "shadow": { "outerRadius": 16, "outerOpacity": 0.35 }
+  },
+  "colors": {
+    "accentSource": "system",
+    "dark": { "surface": "#1C1C1E", "border": "#FFFFFF33" },
+    "light": { "surface": "#FFFFFF", "border": "#00000022" }
+  },
+  "appearance": "system",
+  "geometry": { "expandedBottomRadius": 30, "compactBottomRadius": 14 },
+  "motion": { "preset": "bouncy" },
+  "icons": { "rendering": "hierarchical" }
+}

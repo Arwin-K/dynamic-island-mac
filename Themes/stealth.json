@@ -1,0 +1,13 @@
+{
+  "id": "stealth",
+  "name": "Stealth",
+  "author": "DynamicIsland4Mac",
+  "surface": { "kind": "black", "opacity": 1, "border": { "width": 0 }, "shadow": { "outerRadius": 0 } },
+  "colors": {
+    "accentSource": "system",
+    "dark": { "foreground": "#FFFFFF", "secondary": "#FFFFFF99", "accent": "#FFFFFF" },
+    "light": { "foreground": "#FFFFFF", "secondary": "#FFFFFF99", "accent": "#FFFFFF", "surface": "#000000" }
+  },
+  "appearance": "dark",
+  "motion": { "preset": "snappy" }
+}

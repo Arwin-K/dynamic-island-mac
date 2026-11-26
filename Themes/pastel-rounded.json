@@ -1,0 +1,29 @@
+{
+  "id": "pastel-rounded",
+  "name": "Pastel Rounded",
+  "author": "DynamicIsland4Mac",
+  "surface": {
+    "kind": "gradient",
+    "gradientAngle": 120,
+    "border": { "width": 1, "opacity": 1 },
+    "shadow": { "outerRadius": 18, "outerOpacity": 0.25 }
+  },
+  "colors": {
+    "accentSource": "fixed",
+    "dark": {
+      "foreground": "#F8ECF4", "secondary": "#D7C2D8", "accent": "#FFB3C7",
+      "surface": "#2B2433", "gradientStart": "#3A2D45", "gradientEnd": "#241E2C",
+      "border": "#FFFFFF1F", "shadow": "#000000"
+    },
+    "light": {
+      "foreground": "#4A3F55", "secondary": "#7D6E8A", "accent": "#FF7FA8",
+      "surface": "#FDF3F8", "gradientStart": "#FFF1F7", "gradientEnd": "#EAF0FF",
+      "border": "#4A3F5514", "shadow": "#7D6E8A"
+    }
+  },
+  "appearance": "system",
+  "typography": { "family": "system-rounded", "titleWeight": "bold" },
+  "geometry": { "expandedBottomRadius": 36, "compactBottomRadius": 16, "alertHeight": 60 },
+  "motion": { "preset": "bouncy" },
+  "icons": { "rendering": "palette" }
+}

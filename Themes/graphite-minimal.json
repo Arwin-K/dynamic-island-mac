@@ -1,0 +1,22 @@
+{
+  "id": "graphite-minimal",
+  "name": "Graphite Minimal",
+  "author": "DynamicIsland4Mac",
+  "surface": { "kind": "solid", "border": { "width": 1, "opacity": 1 }, "shadow": { "outerRadius": 8, "outerOpacity": 0.4 } },
+  "colors": {
+    "accentSource": "fixed",
+    "dark": {
+      "foreground": "#E5E5EA", "secondary": "#8E8E93", "accent": "#AEAEB2",
+      "surface": "#1C1C1E", "border": "#3A3A3C"
+    },
+    "light": {
+      "foreground": "#1C1C1E", "secondary": "#6E6E73", "accent": "#48484A",
+      "surface": "#F2F2F7", "border": "#D1D1D6"
+    }
+  },
+  "appearance": "system",
+  "typography": { "titleWeight": "medium", "bodyWeight": "regular" },
+  "geometry": { "expandedBottomRadius": 18, "compactBottomRadius": 9, "collapsedBottomRadius": 8 },
+  "motion": { "preset": "smooth" },
+  "icons": { "weight": "regular", "rendering": "monochrome" }
+}
