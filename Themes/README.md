@@ -104,11 +104,13 @@ A **color set** has these keys:
 | Key | Default | Meaning |
 |---|---|---|
 | `compactSideWidth` | `68` | Width added on each side of the notch in the compact state |
-| `expandedWidth` | `440` | Width of the expanded panel |
-| `expandedHeight` | `156` | Height of the expanded panel, measured below the notch |
+| `expandedWidth` | `400` | Width of the expanded panel |
+| `expandedHeight` | `120` | Height of the expanded panel, measured below the notch |
 | `alertWidth` | `360` | Width of alerts |
 | `alertHeight` | `56` | Height of alerts, measured below the notch |
 | `collapsedBottomRadius` | `9` | Bottom corner radius when collapsed (match your notch) |
+| `collapsedSideOutset` | `8` | When collapsed, how far the island reaches past each side of the notch (0 = exactly the notch, invisible) |
+| `collapsedBottomOutset` | `4` | When collapsed, how far the island reaches below the notch |
 | `compactBottomRadius` | `12` | Bottom corner radius in the compact state |
 | `expandedBottomRadius` | `28` | Bottom corner radius when expanded or alerting |
 | `topCurveDepth` | `6` | Depth of the small inward curves where the island meets the top of the screen |

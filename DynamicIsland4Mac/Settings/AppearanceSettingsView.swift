@@ -279,6 +279,8 @@ private struct GeometrySection: View {
             ValueSlider(title: "Alert width", value: store.binding(\.geometry.alertWidth), range: 240...600)
             ValueSlider(title: "Alert height", value: store.binding(\.geometry.alertHeight), range: 36...120)
             ValueSlider(title: "Collapsed corner radius", value: store.binding(\.geometry.collapsedBottomRadius), range: 0...20)
+            ValueSlider(title: "Rim around the notch (sides)", value: store.binding(\.geometry.collapsedSideOutset), range: 0...30)
+            ValueSlider(title: "Rim around the notch (below)", value: store.binding(\.geometry.collapsedBottomOutset), range: 0...12)
             ValueSlider(title: "Compact corner radius", value: store.binding(\.geometry.compactBottomRadius), range: 0...24)
             ValueSlider(title: "Expanded corner radius", value: store.binding(\.geometry.expandedBottomRadius), range: 0...48)
             ValueSlider(title: "Top curve depth", value: store.binding(\.geometry.topCurveDepth), range: 0...14, step: 0.5, format: "%.1f")

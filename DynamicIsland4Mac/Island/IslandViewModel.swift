@@ -145,11 +145,16 @@ final class IslandViewModel {
         let compactWidth: CGFloat = geometry.hasNotch
             ? base.width + CGFloat(g.compactSideWidth) * 2 + flare
             : max(base.width, CGFloat(g.compactSideWidth) * 2 + centerGap + 24)
+        // On a notched display the resting island wraps around the hardware notch by a few
+        // points, so it reads as a shape hugging the notch rather than disappearing into it.
+        let hugsNotch = geometry.hasNotch && !isFloating
+        let sideOutset = hugsNotch ? CGFloat(max(0, g.collapsedSideOutset)) : 0
+        let bottomOutset = hugsNotch ? CGFloat(max(0, g.collapsedBottomOutset)) : 0
         switch state {
         case .collapsed:
-            return CGSize(width: base.width + flare, height: base.height)
+            return CGSize(width: base.width + sideOutset * 2 + flare, height: base.height + bottomOutset)
         case .compact:
-            return CGSize(width: compactWidth, height: base.height)
+            return CGSize(width: max(compactWidth, base.width + sideOutset * 2 + flare), height: base.height + bottomOutset)
         case .alert:
             return CGSize(width: max(CGFloat(g.alertWidth), compactWidth), height: base.height + CGFloat(g.alertHeight))
         case .expanded:

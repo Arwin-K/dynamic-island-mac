@@ -172,12 +172,16 @@ struct Geometry: Codable, Equatable, Sendable {
     /// Width added on each side of the notch in the compact state.
     var compactSideWidth: Double = 68
     /// Width and height of the expanded panel. Height is measured below the notch.
-    var expandedWidth: Double = 440
-    var expandedHeight: Double = 156
+    var expandedWidth: Double = 400
+    var expandedHeight: Double = 120
     /// Alert size. Height is measured below the notch.
     var alertWidth: Double = 360
     var alertHeight: Double = 56
     var collapsedBottomRadius: Double = 9
+    /// When collapsed on a notched display, how far the island reaches past the hardware
+    /// notch on each side and below it, so it visibly hugs the notch. 0 = exactly the notch.
+    var collapsedSideOutset: Double = 8
+    var collapsedBottomOutset: Double = 4
     var compactBottomRadius: Double = 12
     var expandedBottomRadius: Double = 28
     /// Depth of the small inward curves where the island meets the top edge of the screen.

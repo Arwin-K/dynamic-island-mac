@@ -120,7 +120,7 @@ final class NowPlayingModule: IslandModule {
     // MARK: Views
 
     func compactLeading() -> some View {
-        ArtworkView(image: media.artwork, size: 22, cornerRadius: 5)
+        ArtworkView(image: media.artwork, size: 24, cornerRadius: 6)
             .islandMatched("artwork", module: id)
             .accessibilityLabel(media.nowPlaying.map { "Now playing: \($0.title)" } ?? "Now playing")
     }

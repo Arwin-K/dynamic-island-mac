@@ -57,18 +57,20 @@ struct NowPlayingExpandedView: View {
 
     var body: some View {
         if let now = module.media.nowPlaying {
-            HStack(alignment: .center, spacing: 14) {
-                ArtworkView(image: module.media.artwork, size: 76, cornerRadius: 12)
+            // Compact layout: big artwork on the left; title, one-row progress, and a row with
+            // the playback controls and the system volume on the right.
+            HStack(alignment: .center, spacing: 12) {
+                ArtworkView(image: module.media.artwork, size: 92, cornerRadius: 14)
                     .islandMatched("artwork", module: module.id)
                     .shadow(color: .black.opacity(0.35), radius: 6, y: 2)
-                VStack(alignment: .leading, spacing: 6) {
-                    HStack(alignment: .firstTextBaseline) {
+                VStack(alignment: .leading, spacing: 7) {
+                    HStack(alignment: .top, spacing: 6) {
                         VStack(alignment: .leading, spacing: 1) {
                             Text(now.title)
                                 .font(theme.titleFont)
                                 .lineLimit(1)
                             Text([now.artist, now.album].compactMap { $0 }.joined(separator: " — "))
-                                .font(theme.bodyFont)
+                                .font(theme.captionFont)
                                 .foregroundStyle(palette.secondary)
                                 .lineLimit(1)
                         }
@@ -76,7 +78,10 @@ struct NowPlayingExpandedView: View {
                         AppIconView(bundleID: now.appBundleID)
                     }
                     ProgressScrubber(module: module, now: now)
-                    PlaybackControls(module: module, isPlaying: now.isPlaying)
+                    HStack(spacing: 10) {
+                        PlaybackControls(module: module, isPlaying: now.isPlaying)
+                        VolumeSlider(tint: module.tint)
+                    }
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -111,7 +116,7 @@ private struct AppIconView: View {
     }
 }
 
-/// Progress bar with elapsed / remaining times. Drag to scrub; the seek is sent on release.
+/// One row: elapsed, bar, remaining. Drag the bar to scrub; the seek is sent on release.
 /// Redraws once a second only while playing.
 private struct ProgressScrubber: View {
     let module: NowPlayingModule
@@ -125,7 +130,9 @@ private struct ProgressScrubber: View {
             TimelineView(.periodic(from: .now, by: now.isPlaying ? 1 : 3600)) { context in
                 let elapsed = dragFraction.map { $0 * duration } ?? (now.elapsed(at: context.date) ?? 0)
                 let fraction = min(max(elapsed / duration, 0), 1)
-                VStack(spacing: 3) {
+                HStack(spacing: 6) {
+                    Text(Self.format(elapsed))
+                        .frame(minWidth: 28, alignment: .leading)
                     GeometryReader { geo in
                         ZStack(alignment: .leading) {
                             Capsule().fill(palette.foreground.opacity(0.18))
@@ -144,15 +151,12 @@ private struct ProgressScrubber: View {
                                 }
                         )
                     }
-                    .frame(height: 10)
-                    HStack {
-                        Text(Self.format(elapsed))
-                        Spacer()
-                        Text("-" + Self.format(max(duration - elapsed, 0)))
-                    }
-                    .font(theme.timerFont)
-                    .foregroundStyle(palette.secondary)
+                    .frame(height: 12)
+                    Text("-" + Self.format(max(duration - elapsed, 0)))
+                        .frame(minWidth: 32, alignment: .trailing)
                 }
+                .font(theme.timerFont)
+                .foregroundStyle(palette.secondary)
                 .accessibilityElement()
                 .accessibilityLabel("Playback position")
                 .accessibilityValue("\(Self.format(elapsed)) of \(Self.format(duration))")
@@ -161,6 +165,7 @@ private struct ProgressScrubber: View {
                     module.media.seek(to: min(max(elapsed + step, 0), duration))
                 }
             }
+            .frame(height: 12)
         }
     }
 
@@ -177,25 +182,88 @@ private struct PlaybackControls: View {
     @Environment(\.islandPalette) private var palette
 
     var body: some View {
-        HStack(spacing: 22) {
-            Spacer()
+        HStack(spacing: 4) {
             button("backward.fill", label: "Previous track") { module.media.send(.previousTrack) }
-            button(isPlaying ? "pause.fill" : "play.fill", label: isPlaying ? "Pause" : "Play", size: 20) { module.media.send(.togglePlayPause) }
+            button(isPlaying ? "pause.fill" : "play.fill", label: isPlaying ? "Pause" : "Play", size: 19) { module.media.send(.togglePlayPause) }
             button("forward.fill", label: "Next track") { module.media.send(.nextTrack) }
-            Spacer()
         }
     }
 
-    private func button(_ symbol: String, label: String, size: CGFloat = 15, action: @escaping () -> Void) -> some View {
+    private func button(_ symbol: String, label: String, size: CGFloat = 14, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             Image(systemName: symbol)
                 .font(.system(size: size, weight: theme.icons.weight.weight))
                 .foregroundStyle(palette.foreground)
-                .frame(width: 30, height: 26)
+                .frame(width: 28, height: 24)
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
         .accessibilityLabel(label)
+    }
+}
+
+/// System output volume. Drag or click anywhere on the bar; click the speaker to mute.
+/// Hidden when the current output device has no software volume.
+private struct VolumeSlider: View {
+    let tint: Color
+    @State private var volume = VolumeController.shared
+    @State private var dragging = false
+    @Environment(\.islandTheme) private var theme
+    @Environment(\.islandPalette) private var palette
+
+    var body: some View {
+        if volume.isAvailable {
+            let level = volume.muted ? 0 : volume.level
+            HStack(spacing: 6) {
+                Button {
+                    volume.toggleMute()
+                } label: {
+                    Image(systemName: Self.symbol(level))
+                        .font(.system(size: 11, weight: theme.icons.weight.weight))
+                        .foregroundStyle(palette.secondary)
+                        .frame(width: 16, height: 20, alignment: .leading)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(volume.muted ? "Unmute" : "Mute")
+                GeometryReader { geo in
+                    ZStack(alignment: .leading) {
+                        Capsule().fill(palette.foreground.opacity(0.18))
+                        Capsule().fill(palette.foreground.opacity(0.85))
+                            .frame(width: max(4, geo.size.width * level))
+                    }
+                    .frame(height: dragging ? 6 : 4)
+                    .frame(maxHeight: .infinity)
+                    .contentShape(Rectangle())
+                    .gesture(
+                        DragGesture(minimumDistance: 0)
+                            .onChanged { value in
+                                dragging = true
+                                volume.set(value.location.x / max(geo.size.width, 1))
+                            }
+                            .onEnded { _ in dragging = false }
+                    )
+                }
+                .frame(height: 20)
+            }
+            .animation(.easeOut(duration: 0.12), value: dragging)
+            .onAppear { volume.start() }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel("Volume")
+            .accessibilityValue("\(Int(level * 100)) percent")
+            .accessibilityAdjustableAction { direction in
+                volume.set(volume.level + (direction == .increment ? 0.0625 : -0.0625))
+            }
+        } else {
+            Color.clear
+                .frame(height: 20)
+                .onAppear { volume.start() }
+        }
+    }
+
+    static func symbol(_ level: Double) -> String {
+        if level == 0 { return "speaker.slash.fill" }
+        return level < 0.34 ? "speaker.wave.1.fill" : (level < 0.67 ? "speaker.wave.2.fill" : "speaker.wave.3.fill")
     }
 }
 
