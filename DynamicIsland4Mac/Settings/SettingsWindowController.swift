@@ -33,6 +33,9 @@ final class SettingsWindowController: NSObject, NSWindowDelegate {
     func windowWillClose(_ notification: Notification) {
         AppServices.shared.themeStore.flushPendingSave()
         AppServices.shared.preferences.saveNow()
+        // Release the window and its SwiftUI tree (including the live preview islands) so a
+        // closed Settings window costs no memory. It's rebuilt quickly the next time.
+        DispatchQueue.main.async { [weak self] in self?.window = nil }
     }
 }
 

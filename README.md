@@ -240,8 +240,9 @@ theme with everyone, see [CONTRIBUTING.md](CONTRIBUTING.md#submit-your-theme).
 ## Write your own module in 5 minutes
 
 Everything in the island is a module. A module is an `@Observable` class with three views.
-Here is the complete Focus Timer module, which ships in
-[`Modules/FocusTimer/FocusTimerModule.swift`](DynamicIsland4Mac/Modules/FocusTimer/FocusTimerModule.swift):
+Here is a complete, minimal focus timer. The Focus Timer that ships in
+[`Modules/FocusTimer/`](DynamicIsland4Mac/Modules/FocusTimer/) grows this into a draining
+progress ring, pause / resume, presets and a daily session count:
 
 ```swift
 import Observation

@@ -1,4 +1,5 @@
 import Foundation
+import IOKit
 import IOKit.ps
 import Observation
 
@@ -59,9 +60,61 @@ final class BatteryService {
         onChange?(old, new)
     }
 
+    /// Extra detail from the battery's IORegistry entry (no permission needed). Some keys
+    /// aren't published on every macOS version, so everything is optional.
+    struct Details: Equatable {
+        var cycleCount: Int?
+        /// Full-charge capacity as a percentage of the design capacity.
+        var healthPercent: Int?
+        var temperatureCelsius: Double?
+        /// Power flowing into (+) or out of (-) the battery, in watts.
+        var batteryWatts: Double?
+        /// The connected adapter's rating, in watts.
+        var adapterWatts: Int?
+    }
+
+    private(set) var details = Details()
+
+    /// Re-reads the IORegistry details. Cheap (one registry lookup); the battery page calls
+    /// it every few seconds only while it's on screen.
+    func refreshDetails() {
+        let new = Self.readDetails()
+        if new != details { details = new }
+    }
+
+    nonisolated static func readDetails() -> Details {
+        let service = IOServiceGetMatchingService(kIOMainPortDefault, IOServiceMatching("AppleSmartBattery"))
+        guard service != 0 else { return Details() }
+        defer { IOObjectRelease(service) }
+        var props: Unmanaged<CFMutableDictionary>?
+        guard IORegistryEntryCreateCFProperties(service, &props, kCFAllocatorDefault, 0) == KERN_SUCCESS,
+              let dict = props?.takeRetainedValue() as? [String: Any] else { return Details() }
+        let nested = dict["BatteryData"] as? [String: Any] ?? [:]
+        func int(_ key: String) -> Int64? {
+            let value = dict[key] ?? nested[key]
+            if let n = value as? NSNumber { return n.int64Value } // UInt64 two's-complement → signed
+            return nil
+        }
+        var d = Details()
+        d.cycleCount = int("CycleCount").map(Int.init)
+        if let raw = int("AppleRawMaxCapacity") ?? int("NominalChargeCapacity"), let design = int("DesignCapacity"), design > 0 {
+            d.healthPercent = Int((Double(raw) / Double(design) * 100).rounded())
+        }
+        if let t = int("Temperature") ?? int("VirtualTemperature"), t > 0 { d.temperatureCelsius = Double(t) / 100 }
+        if let mv = int("Voltage"), let ma = int("Amperage") ?? int("InstantAmperage") {
+            let watts = Double(mv) * Double(ma) / 1_000_000
+            if abs(watts) >= 0.1 { d.batteryWatts = watts }
+        }
+        if let adapter = dict["AdapterDetails"] as? [String: Any], let w = (adapter["Watts"] as? NSNumber)?.intValue, w > 0 {
+            d.adapterWatts = w
+        }
+        return d
+    }
+
     /// Settings preview only: show fake data.
-    func setPreview(_ snapshot: Snapshot) {
+    func setPreview(_ snapshot: Snapshot, details: Details = Details()) {
         self.snapshot = snapshot
+        self.details = details
     }
 
     nonisolated static func read() -> Snapshot {

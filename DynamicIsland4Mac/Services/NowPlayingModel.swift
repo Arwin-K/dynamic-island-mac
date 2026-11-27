@@ -49,26 +49,37 @@ enum NowPlayingParser {
               let payload = object["payload"] as? [String: Any]
         else { return nil }
 
-        let previousArtwork = state["artworkData"] as? String
+        let previousKey = state[artworkKey] as? String
         if (object["diff"] as? Bool) == true {
             for (key, value) in payload {
                 if value is NSNull { state.removeValue(forKey: key) } else { state[key] = value }
             }
+            if payload["artworkData"] is NSNull { state.removeValue(forKey: artworkKey) }
         } else {
             state = payload
         }
-        let artwork = state["artworkData"] as? String
-        let artworkChanged = artwork != previousArtwork
+        // Artwork arrives as base64 (often hundreds of KB). Keep only a fingerprint in the
+        // merged state, so the string isn't held in memory for the rest of the track; decode
+        // only when the artwork actually changed.
         var artworkData: Data?
-        if artworkChanged, let artwork {
-            artworkData = Data(base64Encoded: artwork, options: .ignoreUnknownCharacters)
+        if let raw = state.removeValue(forKey: "artworkData") as? String {
+            let key = fingerprint(raw)
+            state[artworkKey] = key
+            if key != previousKey { artworkData = Data(base64Encoded: raw, options: .ignoreUnknownCharacters) }
         }
+        let artworkChanged = (state[artworkKey] as? String) != previousKey
         return Update(nowPlaying: nowPlaying(from: state), artworkData: artworkData, artworkChanged: artworkChanged)
+    }
+
+    private static let artworkKey = "_artworkFingerprint"
+
+    private static func fingerprint(_ base64: String) -> String {
+        "\(base64.count):\(base64.prefix(48)):\(base64.suffix(48))"
     }
 
     static func nowPlaying(from dict: [String: Any]) -> NowPlaying? {
         guard let title = dict["title"] as? String, !title.isEmpty else { return nil }
-        let artwork = dict["artworkData"] as? String
+        let artwork = dict[artworkKey] as? String
         return NowPlaying(
             title: title,
             artist: (dict["artist"] as? String).flatMap { $0.isEmpty ? nil : $0 },
@@ -80,7 +91,7 @@ enum NowPlayingParser {
             isPlaying: dict["playing"] as? Bool ?? false,
             bundleID: dict["bundleIdentifier"] as? String,
             parentBundleID: dict["parentApplicationBundleIdentifier"] as? String,
-            artworkID: artwork.map { $0.count ^ $0.suffix(64).hashValue }
+            artworkID: artwork.map { $0.hashValue }
         )
     }
 

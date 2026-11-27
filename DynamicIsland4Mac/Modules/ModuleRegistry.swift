@@ -27,6 +27,7 @@ enum ModuleRegistry {
         r.add { BatteryModule.preview(context: $0) }
         r.add { CalendarModule.preview(context: $0) }
         r.add { ShelfModule.preview(context: $0) }
+        r.add { FocusTimerModule.preview(context: $0) }
         return r.modules
     }
 

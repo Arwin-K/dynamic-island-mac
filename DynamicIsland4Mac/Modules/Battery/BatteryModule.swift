@@ -98,7 +98,7 @@ final class BatteryModule: IslandModule {
     }
 
     func expanded() -> some View {
-        BatteryExpandedView(snapshot: snapshot, isLow: isLow, moduleID: id)
+        BatteryExpandedView(service: service, isLow: isLow, moduleID: id)
     }
 
     func settingsView() -> AnyView {
@@ -108,7 +108,9 @@ final class BatteryModule: IslandModule {
     /// Fake data for the Settings preview.
     static func preview(context: ModuleContext) -> BatteryModule {
         let module = BatteryModule(context: context)
-        module.service.setPreview(BatteryService.Snapshot(hasBattery: true, level: 0.64, isCharging: true, isPluggedIn: true, minutesToFull: 48))
+        module.service.setPreview(
+            BatteryService.Snapshot(hasBattery: true, level: 0.64, isCharging: true, isPluggedIn: true, minutesToFull: 48),
+            details: BatteryService.Details(cycleCount: 212, healthPercent: 94, batteryWatts: 38.5, adapterWatts: 96))
         module.showingChargeFlash = true
         return module
     }

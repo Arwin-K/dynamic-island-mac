@@ -103,15 +103,15 @@ final class NowPlayingModule: IslandModule {
         }
     }
 
-    private func artworkChanged(_ data: Data?) {
-        guard let data else {
+    private func artworkChanged(_ image: CGImage?) {
+        guard let image else {
             artworkColor = nil
             context.services.themeStore.albumArtAccent = nil
             return
         }
         let style = context.services.themeStore.theme.colors.sampleStyle
         Task.detached(priority: .utility) {
-            let color = ColorSampler.color(fromImageData: data, style: style)
+            let color = ColorSampler.color(from: image, style: style)
             await MainActor.run { [weak self] in
                 self?.artworkColor = color
                 self?.context.services.themeStore.albumArtAccent = color

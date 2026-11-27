@@ -35,7 +35,7 @@ final class MediaService {
     /// Called after the track changes (new title/artist), for "track changed" alerts.
     @ObservationIgnored var onTrackChange: ((NowPlaying) -> Void)?
     /// Called with raw artwork bytes when the artwork changes, for album-art accents.
-    @ObservationIgnored var onArtwork: ((Data?) -> Void)?
+    @ObservationIgnored var onArtwork: ((CGImage?) -> Void)?
 
     @ObservationIgnored private var streamProcess: Process?
     @ObservationIgnored private var stopping = false
@@ -107,7 +107,7 @@ final class MediaService {
     private func useAppleScript(reason: String) {
         source = .appleScript(reason: reason)
         let fallback = AppleScriptMediaSource { [weak self] info, artworkData in
-            self?.apply(nowPlaying: info, artworkData: artworkData, artworkChanged: artworkData != nil || info == nil)
+            self?.apply(nowPlaying: info, artwork: artworkData.flatMap { Self.thumbnail($0) }, artworkChanged: artworkData != nil || info == nil)
         }
         appleScript = fallback
         fallback.start()
@@ -136,8 +136,10 @@ final class MediaService {
             }
             for line in reader.append(data) {
                 guard let update = NowPlayingParser.apply(line: line, to: &state) else { continue }
+                // Decode + downsample here, off the main thread.
+                let thumbnail = update.artworkData.flatMap { Self.thumbnail($0) }
                 DispatchQueue.main.async {
-                    self?.apply(nowPlaying: update.nowPlaying, artworkData: update.artworkData, artworkChanged: update.artworkChanged)
+                    self?.apply(nowPlaying: update.nowPlaying, artwork: thumbnail, artworkChanged: update.artworkChanged)
                 }
             }
         }
@@ -183,16 +185,30 @@ final class MediaService {
         DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: work)
     }
 
-    private func apply(nowPlaying new: NowPlaying?, artworkData: Data?, artworkChanged: Bool) {
+    private func apply(nowPlaying new: NowPlaying?, artwork image: CGImage?, artworkChanged: Bool) {
         let old = nowPlaying
         nowPlaying = new
         if artworkChanged {
-            artwork = artworkData.flatMap(NSImage.init(data:))
-            onArtwork?(artworkData)
+            artwork = image.map { NSImage(cgImage: $0, size: NSSize(width: $0.width, height: $0.height)) }
+            onArtwork?(image)
         }
         if let new, new.title != old?.title || new.artist != old?.artist {
             onTrackChange?(new)
         }
+    }
+
+    /// Artwork is shown at most 92 pt (184 px on Retina), but players send it at up to a few
+    /// thousand pixels. Decoding to a 256 px thumbnail keeps each track's artwork at ~256 KB in
+    /// memory instead of several MB.
+    nonisolated static func thumbnail(_ data: Data, maxPixels: Int = 256) -> CGImage? {
+        guard let source = CGImageSourceCreateWithData(data as CFData, nil) else { return nil }
+        let options: [CFString: Any] = [
+            kCGImageSourceCreateThumbnailFromImageAlways: true,
+            kCGImageSourceThumbnailMaxPixelSize: maxPixels,
+            kCGImageSourceCreateThumbnailWithTransform: true,
+            kCGImageSourceShouldCacheImmediately: true,
+        ]
+        return CGImageSourceCreateThumbnailAtIndex(source, 0, options as CFDictionary)
     }
 
     // MARK: - Controls

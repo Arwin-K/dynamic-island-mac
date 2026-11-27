@@ -46,6 +46,13 @@ final class AppServices {
               let state = IslandState(rawValue: raw) else { return }
         Log.app.debug("Debug preview state: \(raw, privacy: .public), islands: \(self.islands.count)")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            // -DI4MPreviewModule <id> picks the page; -DI4MStartFocus YES starts a focus session.
+            if let module = UserDefaults.standard.string(forKey: "DI4MPreviewModule") { self?.moduleManager.select(module) }
+            if UserDefaults.standard.bool(forKey: "DI4MStartFocus"),
+               let focus = self?.moduleManager.module(id: "focusTimer")?.base as? FocusTimerModule {
+                self?.moduleManager.setEnabled("focusTimer", true)
+                focus.beginSession()
+            }
             for island in self?.islands ?? [] {
                 switch state {
                 case .expanded: island.open(pinned: true)

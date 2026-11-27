@@ -54,12 +54,21 @@ final class IslandWindowController {
         hosting.frame = container.bounds
         container.addSubview(hosting)
         panel.contentView = container
-        panel.sharingType = services.preferences.values.hideFromScreenCapture ? .none : .readOnly
+        panel.sharingType = Self.sharingType(services.preferences.values)
 
         apply(model.layout, animated: false)
         panel.orderFrontRegardless()
         observeLayout()
         observeOpenState()
+    }
+
+    /// Excluded from captures per the preference. Debug builds accept `-DI4MAllowCapture YES`
+    /// to override it for screenshots without changing the user's preferences.
+    static func sharingType(_ prefs: Preferences) -> NSWindow.SharingType {
+        #if DEBUG
+        if UserDefaults.standard.bool(forKey: "DI4MAllowCapture") { return .readOnly }
+        #endif
+        return prefs.hideFromScreenCapture ? .none : .readOnly
     }
 
     static func pillSize(_ theme: Theme) -> CGSize {
@@ -71,7 +80,7 @@ final class IslandWindowController {
         self.screen = screen
         let geometry = NotchGeometry.forScreen(screen, pillSize: Self.pillSize(model.services.themeStore.theme))
         if geometry != model.geometry { model.geometry = geometry }
-        panel.sharingType = model.services.preferences.values.hideFromScreenCapture ? .none : .readOnly
+        panel.sharingType = Self.sharingType(model.services.preferences.values)
     }
 
     func close() {

@@ -54,3 +54,33 @@ struct CoreAnimationViewTests {
         #expect(view.layer?.sublayers?.first?.animation(forKey: "pulse") != nil)
     }
 }
+
+@MainActor
+struct FocusTimerTests {
+    let services = AppServices(preferences: PreferencesStore(fileURL: nil), themeStore: ThemeStore())
+
+    func make() -> FocusTimerModule {
+        FocusTimerModule(context: ModuleContext(moduleID: "focusTimer", services: services))
+    }
+
+    @Test func enablingTheModuleDoesNotStartASession() {
+        let timer = make()
+        timer.start() // lifecycle hook, called when the module is enabled
+        #expect(!timer.isActive)
+    }
+
+    @Test func pauseResumeAndAddTime() {
+        let timer = make()
+        timer.beginSession()
+        #expect(timer.isRunning)
+        timer.pause()
+        #expect(timer.isPaused && !timer.isRunning)
+        let paused = timer.remaining()
+        timer.addFiveMinutes()
+        #expect(abs(timer.remaining() - (paused + 300)) < 1)
+        timer.resume()
+        #expect(timer.isRunning)
+        timer.stop()
+        #expect(!timer.isActive)
+    }
+}
