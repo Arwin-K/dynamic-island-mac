@@ -5,6 +5,9 @@ and made your own. It shows what's playing, your battery, your next meeting, fil
 holding, and **every Claude Code and Codex session running on your Mac**, with alerts when
 one needs you. Every visual choice is a theme setting.
 
+**▶ [Watch the 1-minute demo](docs/demo/DynamicIsland4Mac-demo.mp4)** (regenerate it with
+`docs/demo/make-demo.swift`; instructions at the top of that file).
+
 <!-- GIF placeholders: record with your own screen and drop them in docs/images/. -->
 | | |
 |---|---|
