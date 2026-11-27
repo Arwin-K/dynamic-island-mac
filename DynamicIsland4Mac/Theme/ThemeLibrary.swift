@@ -123,6 +123,36 @@ final class ThemeLibrary {
 
     // MARK: - Writing
 
+    /// Encodes only what differs from `Theme.default` (plus `id` and `name`).
+    ///
+    /// Why: a theme file that spells out every value freezes today's defaults. If a later
+    /// version makes the expanded island smaller, a theme saved with the old full set of
+    /// values would keep the old size forever. Loading fills missing keys from the defaults
+    /// (`TolerantDecoder`), so the minimal file decodes to exactly the same theme.
+    nonisolated static func encodeMinimal(_ theme: Theme) throws -> Data {
+        let encoder = JSONEncoder()
+        let full = try JSONSerialization.jsonObject(with: encoder.encode(theme))
+        let base = try JSONSerialization.jsonObject(with: encoder.encode(Theme.default))
+        var diff = difference(full, base) as? [String: Any] ?? [:]
+        diff["id"] = theme.id
+        diff["name"] = theme.name
+        return try JSONSerialization.data(withJSONObject: diff, options: [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes])
+    }
+
+    /// The parts of `value` that differ from `base` (nil when identical). Nested objects are
+    /// compared key by key; keys missing from `base` are kept whole.
+    nonisolated static func difference(_ value: Any, _ base: Any?) -> Any? {
+        if let dict = value as? [String: Any], let baseDict = base as? [String: Any] {
+            var out: [String: Any] = [:]
+            for (key, child) in dict {
+                if let d = difference(child, baseDict[key]) { out[key] = d }
+            }
+            return out.isEmpty ? nil : out
+        }
+        if let base, (value as AnyObject).isEqual(base) { return nil }
+        return value
+    }
+
     nonisolated static func encode(_ theme: Theme) throws -> Data {
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
@@ -137,7 +167,7 @@ final class ThemeLibrary {
         }
         let url = userThemes[theme.id]?.url ?? directory.appendingPathComponent(Self.fileName(for: theme.id))
         do {
-            let data = try Self.encode(theme)
+            let data = try Self.encodeMinimal(theme)
             try data.write(to: url, options: .atomic)
             lastWritten[url] = data
             userThemes[theme.id] = (theme, url, [])
@@ -186,7 +216,7 @@ final class ThemeLibrary {
     }
 
     func export(_ theme: Theme, to url: URL) throws {
-        try Self.encode(theme).write(to: url, options: .atomic)
+        try Self.encodeMinimal(theme).write(to: url, options: .atomic)
     }
 
     private func uniqueID(base: String) -> String {

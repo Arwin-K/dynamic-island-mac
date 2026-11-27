@@ -11,6 +11,8 @@ final class NowPlayingModule: IslandModule {
     let symbolName = "music.note"
     let priority = 20
     let showsInExpandedWhenIdle = true
+    /// Just the artwork and the waveform beside the notch: keep the compact island narrow.
+    let preferredCompactSideWidth: Double? = 52
 
     let media: MediaService
     @ObservationIgnored let context: ModuleContext
@@ -120,7 +122,7 @@ final class NowPlayingModule: IslandModule {
     // MARK: Views
 
     func compactLeading() -> some View {
-        ArtworkView(image: media.artwork, size: 24, cornerRadius: 6)
+        ArtworkView(image: media.artwork, size: 30, cornerRadius: 7)
             .islandMatched("artwork", module: id)
             .accessibilityLabel(media.nowPlaying.map { "Now playing: \($0.title)" } ?? "Now playing")
     }

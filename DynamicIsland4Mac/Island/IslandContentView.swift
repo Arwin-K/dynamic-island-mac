@@ -21,8 +21,10 @@ struct IslandContentView: View {
                 Color.clear
             case .compact:
                 if let module = modules.compactModule {
-                    CompactRow(module: module, centerGap: model.centerGap, activeCount: modules.active.count)
-                        .padding(.horizontal, model.topCurve + 10)
+                    CompactRow(module: module, centerGap: model.centerGap,
+                               sideWidth: model.sideContentWidth(for: .compact, inset: model.topCurve + 7),
+                               activeCount: modules.active.count)
+                        .padding(.horizontal, model.topCurve + 7)
                         .frame(height: notchHeight)
                         .transition(transition)
                         .id(module.id)
@@ -40,7 +42,8 @@ struct IslandContentView: View {
                     .id(alert.id)
                 }
             case .expanded:
-                ExpandedContainer(model: model, notchHeight: notchHeight)
+                ExpandedContainer(model: model, notchHeight: notchHeight,
+                                  sideWidth: model.sideContentWidth(for: .expanded, inset: sidePadding))
                     .padding(.horizontal, sidePadding)
                     .padding(.bottom, CGFloat(theme.geometry.padding))
                     .transition(transition)
@@ -51,9 +54,12 @@ struct IslandContentView: View {
 }
 
 /// Leading content | the notch | trailing content.
+/// Each side gets an exact width and is clipped, so oversized module content can never
+/// spill under the notch.
 private struct CompactRow: View {
     let module: AnyIslandModule
     let centerGap: CGFloat
+    let sideWidth: CGFloat
     let activeCount: Int
     @Environment(\.islandPalette) private var palette
 
@@ -69,10 +75,12 @@ private struct CompactRow: View {
                 }
                 module.compactLeading()
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .frame(width: sideWidth, alignment: .leading)
+            .clipped()
             Color.clear.frame(width: centerGap)
             module.compactTrailing()
-                .frame(maxWidth: .infinity, alignment: .trailing)
+                .frame(width: sideWidth, alignment: .trailing)
+                .clipped()
         }
         .accessibilityElement(children: .contain)
         .accessibilityLabel(module.displayName)
@@ -83,51 +91,76 @@ private struct CompactRow: View {
 private struct ExpandedContainer: View {
     let model: IslandViewModel
     let notchHeight: CGFloat
+    /// Room on each side of the notch in the header row.
+    let sideWidth: CGFloat
     @Environment(\.islandTheme) private var theme
     @Environment(\.islandPalette) private var palette
+
+    private static let tabWidth: CGFloat = 22
+    private static let tabSpacing: CGFloat = 4
+
+    /// How many 22 pt buttons fit in `width`.
+    private static func capacity(_ width: CGFloat) -> Int {
+        max(0, Int((width + tabSpacing) / (tabWidth + tabSpacing)))
+    }
 
     var body: some View {
         let modules = model.modules
         let tabs = modules.expandedTabs
         let current = modules.expandedModule
+        // Tabs fill the left of the notch first, then the right (which also holds the
+        // settings gear). Whatever still doesn't fit goes into a "more" menu, so nothing is
+        // ever drawn under the notch.
+        let leftCap = Self.capacity(sideWidth)
+        let rightCap = max(0, Self.capacity(sideWidth) - 1)
+        let overflowing = tabs.count > leftCap + rightCap
+        let left = Array(tabs.prefix(leftCap))
+        let right = Array(tabs.dropFirst(leftCap).prefix(overflowing ? max(0, rightCap - 1) : rightCap))
+        let more = Array(tabs.dropFirst(left.count + right.count))
         VStack(spacing: 6) {
             HStack(spacing: 0) {
-                HStack(spacing: 4) {
-                    ForEach(tabs.prefix(5)) { tab in
-                        Button {
-                            modules.select(tab.id)
-                        } label: {
-                            Image(systemName: tab.symbolName)
-                                .font(.system(size: 11, weight: theme.icons.weight.weight))
-                                .symbolRenderingMode(theme.icons.rendering.mode)
-                                .frame(width: 22, height: 20)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 6)
-                                        .fill(palette.foreground.opacity(tab.id == current?.id ? 0.16 : 0))
-                                )
-                                .foregroundStyle(tab.id == current?.id ? palette.foreground : palette.secondary)
-                        }
-                        .buttonStyle(.plain)
-                        .accessibilityLabel(tab.displayName)
-                        .accessibilityAddTraits(tab.id == current?.id ? .isSelected : [])
-                    }
+                HStack(spacing: Self.tabSpacing) {
+                    ForEach(left) { tabButton($0, current: current) }
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(width: sideWidth, alignment: .leading)
+                .clipped()
                 Color.clear.frame(width: model.centerGap)
-                HStack {
-                    Spacer()
+                HStack(spacing: Self.tabSpacing) {
+                    Spacer(minLength: 0)
+                    ForEach(right) { tabButton($0, current: current) }
+                    if !more.isEmpty {
+                        Menu {
+                            ForEach(more) { tab in
+                                Button {
+                                    modules.select(tab.id)
+                                } label: {
+                                    Label(tab.displayName, systemImage: tab.id == current?.id ? "checkmark" : tab.symbolName)
+                                }
+                            }
+                        } label: {
+                            Image(systemName: "ellipsis")
+                                .font(.system(size: 11, weight: theme.icons.weight.weight))
+                                .foregroundStyle(more.contains { $0.id == current?.id } ? palette.foreground : palette.secondary)
+                                .frame(width: Self.tabWidth, height: 20)
+                        }
+                        .menuStyle(.borderlessButton)
+                        .menuIndicator(.hidden)
+                        .frame(width: Self.tabWidth)
+                        .accessibilityLabel("More modules")
+                    }
                     Button {
                         SettingsOpener.open(.modules)
                     } label: {
                         Image(systemName: "gearshape")
                             .font(.system(size: 11, weight: theme.icons.weight.weight))
                             .foregroundStyle(palette.secondary)
-                            .frame(width: 22, height: 20)
+                            .frame(width: Self.tabWidth, height: 20)
                     }
                     .buttonStyle(.plain)
                     .accessibilityLabel("Settings")
                 }
-                .frame(maxWidth: .infinity)
+                .frame(width: sideWidth, alignment: .trailing)
+                .clipped()
             }
             .frame(height: notchHeight)
 
@@ -150,5 +183,24 @@ private struct ExpandedContainer: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
+    }
+
+    private func tabButton(_ tab: AnyIslandModule, current: AnyIslandModule?) -> some View {
+        Button {
+            model.modules.select(tab.id)
+        } label: {
+            Image(systemName: tab.symbolName)
+                .font(.system(size: 11, weight: theme.icons.weight.weight))
+                .symbolRenderingMode(theme.icons.rendering.mode)
+                .frame(width: Self.tabWidth, height: 20)
+                .background(
+                    RoundedRectangle(cornerRadius: 6)
+                        .fill(palette.foreground.opacity(tab.id == current?.id ? 0.16 : 0))
+                )
+                .foregroundStyle(tab.id == current?.id ? palette.foreground : palette.secondary)
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(tab.displayName)
+        .accessibilityAddTraits(tab.id == current?.id ? .isSelected : [])
     }
 }

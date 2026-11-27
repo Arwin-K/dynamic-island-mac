@@ -100,6 +100,24 @@ struct ThemeDecodingTests {
         #expect(back.warnings.isEmpty)
     }
 
+    @Test func savedThemesStoreOnlyChangesAndRoundTrip() throws {
+        var theme = Theme.default
+        theme.id = "mine"
+        theme.name = "Mine"
+        theme.motion.preset = .bouncy
+        theme.feedback.sounds["agent.permission"] = SoundSetting(enabled: false, sound: "Funk")
+        theme.providers["codex"] = ProviderStyle(accent: .white)
+        let data = try ThemeLibrary.encodeMinimal(theme)
+        let object = try #require(try JSONSerialization.jsonObject(with: data) as? [String: Any])
+        // Untouched sections are left out, so future default changes still apply.
+        #expect(object["geometry"] == nil)
+        #expect(object["surface"] == nil)
+        #expect((object["motion"] as? [String: Any])?.keys.sorted() == ["preset"])
+        let back = TolerantDecoder.decode(Theme.self, from: data, defaults: .default)
+        #expect(back.value == theme)
+        #expect(back.warnings.isEmpty)
+    }
+
     @Test func hexColorParsing() {
         #expect(HexColor(hex: "#FFF") == .white)
         #expect(HexColor(hex: "000000") == .black)

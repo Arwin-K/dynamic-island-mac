@@ -350,7 +350,7 @@ That's it. Build, then turn it on in Settings → Modules. The parts:
 | `context.alert { … }` | A brief alert, with the theme's sound and haptic for a `FeedbackEvent`. |
 | `context.bool/double/string(…)` and `…Binding` | Settings, stored for you. |
 | `start()` / `stop()` | Called when the module is turned on or off. Subscribe to things in `start`. Avoid polling. |
-| `priority`, `enabledByDefault`, `showsInExpandedWhenIdle`, `preferredExpandedHeight` | Defaults: 100, true, false, nil. |
+| `priority`, `enabledByDefault`, `showsInExpandedWhenIdle`, `preferredExpandedHeight`, `preferredCompactSideWidth` | Defaults: 100, true, false, nil, nil. |
 
 To make your module show fake data in the Settings preview, add a `static func preview(context:)`
 and register it in `makePreviewModules`.

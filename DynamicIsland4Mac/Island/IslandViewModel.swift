@@ -136,15 +136,25 @@ final class IslandViewModel {
     var topCurve: CGFloat { isFloating ? 0 : CGFloat(theme.geometry.topCurveDepth) }
 
     /// Width of the hardware notch (the gap compact content must leave in the middle).
-    var centerGap: CGFloat { geometry.hasNotch ? geometry.baseRect.width : 10 }
+    /// The no-go zone in the middle of the island: the hardware notch plus a small clearance
+    /// on each side, so no text or button ever sits under (or touches) the camera housing.
+    var centerGap: CGFloat { geometry.hasNotch ? geometry.baseRect.width + Self.notchClearance * 2 : 10 }
+    static let notchClearance: CGFloat = 6
+
+    /// Width available on each side of the notch for content, given the island's horizontal
+    /// inset (padding + top flare) in the current state.
+    func sideContentWidth(for state: IslandState, inset: CGFloat) -> CGFloat {
+        max(0, (islandSize(for: state).width - inset * 2 - centerGap) / 2)
+    }
 
     func islandSize(for state: IslandState) -> CGSize {
         let g = theme.geometry
         let base = geometry.baseRect.size
         let flare = topCurve * 2
+        let side = CGFloat(modules.compactModule?.preferredCompactSideWidth ?? g.compactSideWidth)
         let compactWidth: CGFloat = geometry.hasNotch
-            ? base.width + CGFloat(g.compactSideWidth) * 2 + flare
-            : max(base.width, CGFloat(g.compactSideWidth) * 2 + centerGap + 24)
+            ? base.width + side * 2 + flare
+            : max(base.width, side * 2 + centerGap + 24)
         // On a notched display the resting island wraps around the hardware notch by a few
         // points, so it reads as a shape hugging the notch rather than disappearing into it.
         let hugsNotch = geometry.hasNotch && !isFloating

@@ -38,6 +38,9 @@ protocol IslandModule: AnyObject, Identifiable where ID == String {
     /// Ask for a taller expanded panel (points below the notch) while showing this module,
     /// e.g. while something needs a decision. `nil` uses the theme's height.
     var preferredExpandedHeight: Double? { get }
+    /// Width of each side of the compact island while this module owns it (points beside the
+    /// notch). `nil` uses the theme's `compactSideWidth`.
+    var preferredCompactSideWidth: Double? { get }
 
     @ViewBuilder func compactLeading() -> CompactLeading
     @ViewBuilder func compactTrailing() -> CompactTrailing
@@ -58,6 +61,7 @@ extension IslandModule {
     var enabledByDefault: Bool { true }
     var showsInExpandedWhenIdle: Bool { false }
     var preferredExpandedHeight: Double? { nil }
+    var preferredCompactSideWidth: Double? { nil }
     func settingsView() -> AnyView { AnyView(EmptyView()) }
     func start() {}
     func stop() {}
@@ -77,6 +81,7 @@ final class AnyIslandModule: Identifiable {
     private let _isActive: () -> Bool
     private let _showsWhenIdle: () -> Bool
     private let _preferredHeight: () -> Double?
+    private let _preferredSideWidth: () -> Double?
     private let _compactLeading: () -> AnyView
     private let _compactTrailing: () -> AnyView
     private let _expanded: () -> AnyView
@@ -94,6 +99,7 @@ final class AnyIslandModule: Identifiable {
         _isActive = { module.isActive }
         _showsWhenIdle = { module.showsInExpandedWhenIdle }
         _preferredHeight = { module.preferredExpandedHeight }
+        _preferredSideWidth = { module.preferredCompactSideWidth }
         _compactLeading = { AnyView(module.compactLeading()) }
         _compactTrailing = { AnyView(module.compactTrailing()) }
         _expanded = { AnyView(module.expanded()) }
@@ -105,6 +111,7 @@ final class AnyIslandModule: Identifiable {
     var isActive: Bool { _isActive() }
     var showsInExpandedWhenIdle: Bool { _showsWhenIdle() }
     var preferredExpandedHeight: Double? { _preferredHeight() }
+    var preferredCompactSideWidth: Double? { _preferredSideWidth() }
     func compactLeading() -> AnyView { _compactLeading() }
     func compactTrailing() -> AnyView { _compactTrailing() }
     func expanded() -> AnyView { _expanded() }
