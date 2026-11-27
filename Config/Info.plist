@@ -6,7 +6,7 @@
 	<key>LSUIElement</key>
 	<true/>
 	<key>NSAppleEventsUsageDescription</key>
-	<string>DynamicIsland4Mac uses Apple Events to read and control Music and Spotify when the media adapter is unavailable, and to bring the right terminal tab to the front when you click an agent session.</string>
+	<string>DynamicIsland4Mac uses Apple Events to check which site is playing in your browser (so only YouTube, Spotify and Apple Music show in Now Playing), to read and control Music and Spotify when the media adapter is unavailable, and to bring the right terminal tab to the front when you click an agent session.</string>
 	<key>NSCalendarsFullAccessUsageDescription</key>
 	<string>DynamicIsland4Mac shows your next calendar event and a countdown in the island. Events never leave your Mac.</string>
 	<key>NSCalendarsUsageDescription</key>

@@ -44,6 +44,17 @@ final class MediaService {
     @ObservationIgnored private var restartWork: DispatchWorkItem?
     @ObservationIgnored private var appleScript: AppleScriptMediaSource?
     @ObservationIgnored private var started = false
+    /// Hides browser tabs and other apps that aren't YouTube, Spotify or Apple Music.
+    @ObservationIgnored private let musicFilter = MusicSourceFilter()
+    /// The adapter's latest report and artwork, before filtering.
+    @ObservationIgnored private var reported: NowPlaying?
+    @ObservationIgnored private var reportedArtwork: CGImage?
+    @ObservationIgnored private var publishedArtwork: CGImage?
+
+    init() {
+        musicFilter.onResolve = { [weak self] in self?.publishFiltered() }
+        musicFilter.onAccessDenied = { [weak self] message in self?.lastError = message }
+    }
 
     // MARK: - Bundled adapter paths
 
@@ -101,6 +112,9 @@ final class MediaService {
         appleScript = nil
         nowPlaying = nil
         artwork = nil
+        reported = nil
+        reportedArtwork = nil
+        publishedArtwork = nil
         source = .none
     }
 
@@ -139,7 +153,7 @@ final class MediaService {
                 // Decode + downsample here, off the main thread.
                 let thumbnail = update.artworkData.flatMap { Self.thumbnail($0) }
                 DispatchQueue.main.async {
-                    self?.apply(nowPlaying: update.nowPlaying, artwork: thumbnail, artworkChanged: update.artworkChanged)
+                    self?.receive(nowPlaying: update.nowPlaying, artwork: thumbnail, artworkChanged: update.artworkChanged)
                 }
             }
         }
@@ -183,6 +197,34 @@ final class MediaService {
         let work = DispatchWorkItem { [weak self] in self?.startStream(paths: paths) }
         restartWork = work
         DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: work)
+    }
+
+    /// An adapter report: remember it, then show it only if it's music we want.
+    private func receive(nowPlaying info: NowPlaying?, artwork image: CGImage?, artworkChanged: Bool) {
+        reported = info
+        if artworkChanged { reportedArtwork = image }
+        publishFiltered()
+    }
+
+    private func publishFiltered() {
+        guard let info = reported else { return publish(nil) }
+        switch musicFilter.verdict(for: info) {
+        case .allowed:
+            publish(info)
+        case .blocked:
+            publish(nil)
+        case .pending:
+            // A browser check is running (a new track or tab). Keep showing the current
+            // track from the same app until it finishes, so a YouTube playlist doesn't flicker;
+            // otherwise show nothing rather than briefly showing a non-music tab.
+            if nowPlaying?.appBundleID != info.appBundleID { publish(nil) }
+        }
+    }
+
+    private func publish(_ info: NowPlaying?) {
+        let image = info == nil ? nil : reportedArtwork
+        apply(nowPlaying: info, artwork: image, artworkChanged: image !== publishedArtwork)
+        publishedArtwork = image
     }
 
     private func apply(nowPlaying new: NowPlaying?, artwork image: CGImage?, artworkChanged: Bool) {

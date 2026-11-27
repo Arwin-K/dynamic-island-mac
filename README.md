@@ -44,9 +44,11 @@ one needs you. Every visual choice is a theme setting.
   permission, done), the project, branch, elapsed time and last message. Click a session to
   jump to its terminal tab. Alerts and sounds fire when a session needs you, finishes or fails.
 - **Now Playing**: artwork that flies between states, a scrubbable progress bar, controls,
-  and a visualizer tinted by the artwork. Works with any player through
-  [`mediaremote-adapter`](https://github.com/ungive/mediaremote-adapter), with an AppleScript
-  fallback for Music and Spotify.
+  and a visualizer tinted by the artwork. Shows music from Apple Music, Spotify and YouTube
+  only (the apps, or their sites in Safari, Chrome, Arc, Brave, Edge, Vivaldi or Opera);
+  other browser tabs and apps playing audio are ignored. Reads the system's now-playing info
+  through [`mediaremote-adapter`](https://github.com/ungive/mediaremote-adapter), with an
+  AppleScript fallback for Music and Spotify.
 - **Battery**: a charging animation on plug-in, low-battery alerts and Low Power Mode.
 - **Calendar** (opt-in): your next event with a countdown and a Join button for video calls.
 - **Volume and brightness HUD** (opt-in): the system overlays, redrawn in the island.
@@ -117,6 +119,7 @@ shows the status of each.
 | Calendars | Calendar module (opt-in) | To read your next events. |
 | Automation: Terminal, iTerm2 | Agent sessions | To bring the exact tab of a session to the front. |
 | Automation: Music, Spotify | Now Playing fallback | Only if the media adapter stops working on your macOS version. |
+| Automation: your browser | Now Playing | When a browser is playing audio, to check that the tab is YouTube, Spotify or Apple Music. Without it, that browser's audio is hidden. |
 
 Not needed: Screen Recording, Microphone, Input Monitoring, Full Disk Access, network.
 
